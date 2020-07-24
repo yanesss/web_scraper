@@ -1,6 +1,6 @@
-const { mongoURI } = require('./data');
+const { mongoURI } = require('../data');
 const mongoose = require('mongoose');
-const notifyDiscord = require('./webhooks/discordHook');
+const notifyDiscord = require('../webhooks/discordHook');
 
 // set up connection
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -9,7 +9,7 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
 
 const compareResults = dataObj => {
     try {
-        const FunkoProduct = require('./models/FunkoPop');
+        const FunkoProduct = require('../models/FunkoPop');
         // finds all data in DB
         FunkoProduct.find({}, (err, funkoList) => {
             return funkoList;
