@@ -2,6 +2,7 @@ const axios = require('axios').default;
 const { webhook } = require('../data');
 
 const sendToDiscord = (title, price, link, img) => {
+    img = img.replace(/["']/g, "");
     const product = {
         "username": "Funko Notifier",
         "avatar_url": "https://i.imgur.com/4M34hi2.png",
@@ -39,20 +40,20 @@ const sendToDiscord = (title, price, link, img) => {
                     },
                     {
                         "name": "**Link**",
-                        "value": `[Link]${ link }`,
+                        "value": `${ link }`,
                         "inline": true
                     }
                 ],
-                // "thumbnail": {
-                //     "url": `${ img }`
-                // }
+                "thumbnail": {
+                    "url": `${ img }`
+                }
             }]
         };
    
         // Send to discord
         axios.post(webhook, product)
         .then(res => {
-            console.log(res);
+            console.log("Sent to discord successfully!");
         })
         .catch(function(error) {
             console.log(error);

@@ -4,7 +4,8 @@ const Schema = mongoose.Schema;
 const FunkoSchema = new Schema({
     name: String,
     price: String,
-    link: String
+    link: String,
+    image: String
 });
 
 

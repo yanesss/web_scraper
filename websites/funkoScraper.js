@@ -24,10 +24,13 @@ const webscraper = async (URL) => {
         const priceHandler = await product.$('.product-price');
         const price = await (await priceHandler.getProperty('innerHTML')).jsonValue();  
 
-        // TODO: GET IMAGES
-
-
-        funkoDetails.push([title, price, link]);
+        const imageHandler = await product.$('.shopify-image');
+        const image = await (await imageHandler.evaluateHandle(element => element.getAttribute("style")));
+        const imageJSON = await image.jsonValue();
+        const regex = /"(.*?)"/;
+        const imageURL = regex.exec(imageJSON)[0];
+        
+        funkoDetails.push([title, price, link, imageURL]);
     }
 
     productList = {

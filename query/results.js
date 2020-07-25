@@ -19,11 +19,12 @@ const compareResults = dataObj => {
             if (funkoList == "") {
                 const { funkoDetails } = dataObj;
                 for (let item of funkoDetails) {
-                    const [name, price, link] = item;
+                    const [name, price, link, imageURL] = item;
                     const funko = {
                         name: name,
                         price: price,
-                        link: link
+                        link: link,
+                        image: imageURL
                     }
 
                    const newProducts = new FunkoProduct(funko);
@@ -34,20 +35,20 @@ const compareResults = dataObj => {
             (async () => { 
                 const { funkoDetails } = dataObj;
                 for (const product of funkoDetails) {
-                    const [ name, price, link ] = product;
-    
+                    const [ name, price, link, imageURL ] = product;
+                
                     // check if any of these items do not exist in the db
-                    const checkIfExists = await FunkoProduct.exists({ name: name, price: price , link: link });
-                    console.log(checkIfExists, name);
-
+                    const checkIfExists = await FunkoProduct.exists({ name: name, price: price , link: link, image: imageURL });
+                    
                     if (!checkIfExists) {
                         const funko = {
                             name: name,
                             price: price,
-                            link: link
+                            link: link,
+                            image: imageURL
                         }
                         // notify discord right here as well
-                        notifyDiscord(name, price, link);
+                        notifyDiscord(name, price, link, imageURL);
                         const newProducts = new FunkoProduct(funko);
                         newProducts.save().catch(err => console.error(err));
                     }
